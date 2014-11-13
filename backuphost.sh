@@ -25,9 +25,7 @@ do
 
 
 	echo "Remote hostname is ${HOST}, getting config file." | log
-
-	CONFIG="$(mktemp)"
-
+	CONFIG=$(mktemp)
 	get_config_file "${IP}" > "${CONFIG}"
 
 	echo "Rotating backup directory..." | log

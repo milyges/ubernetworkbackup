@@ -13,4 +13,4 @@ UBDIR="$(dirname -- ${0})"
 
 IP="${1}"
 
-${SSH} -t ${SSH_OPTS} "${SSH_USER}@${1}" "sudo nano /etc/uberbackup.conf"
+${SSH} -t ${SSH_OPTS} "${SSH_USER}@${1}" "sudo nano /etc/uberbackup.conf; sudo chmod 0600 /etc/uberbackup.conf"

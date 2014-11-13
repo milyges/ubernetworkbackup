@@ -19,7 +19,7 @@ get_remote_users() {
 }
 
 get_config_file() {
-	${SSH} ${SSH_OPTS} "${SSH_USER}@${1}" "cat /etc/uberbackup.conf" 2>/dev/null | grep -v '^#' | grep -v '^$'
+	${SSH} ${SSH_OPTS} "${SSH_USER}@${1}" "sudo cat /etc/uberbackup.conf" 2>/dev/null | grep -v '^#' | grep -v '^$'
 	return $?
 }
 
