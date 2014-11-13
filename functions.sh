@@ -4,7 +4,8 @@ SSH_OPTS="-o PasswordAuthentication=no -o UserKnownHostsFile=/dev/null -o Strict
 
 IONICE="$(which ionice) -c 2 -n 7"
 RSYNC="$(which rsync)"
-LOGFILE="/tmp/uberbackup.log.$$"
+LOGFILE="/tmp/uberbackup.log"
+PIDSFILE="/run/uberbackup.pids"
 UBDIR="$(dirname --  "${0}")"
 
 get_remote_hostname() {
@@ -66,8 +67,28 @@ job_get_param() {
 	grep "job.${2}.${3}" "${1}" | awk -F'=' '{ print $2 }' |  sed 's/^[ \t]*//;s/[ \t]*$//'
 }
 
+startup() {
+	echo "$$" >> "${PIDSFILE}"
+	touch "${LOGFILE}"
+}
+
+cleanup() {
+	echo "Cleaning up..." | log
+	sed -i -e "/$$/d" "${PIDSFILE}"
+	if [ ! -s "${PIDSFILE}" ]
+	then
+		[ -n "${MAILTO}" ] && mail -s "UberBackup on $(hostname --fqdn) report" "${MAILTO}" < "${LOGFILE}"
+		rm -f "${PIDSFILE}"
+		rm -f "${LOGFILE}"
+	fi
+}
+
 # Ładowanie pluginow
 for PLUGIN in ${UBDIR}/plugins/*.sh
 do
 	. "${PLUGIN}"
 done
+
+trap cleanup EXIT
+
+startup
