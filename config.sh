@@ -15,7 +15,7 @@ MAILTO=""
 NAME_FORMAT="%d-%m-%Y"
 
 # Klucz SSH
-SSH_KEY="/home/uberbackup/.ssh/id_rsa"
+SSH_KEY="/root/.ssh/id_rsa"
 
 # Uzytkownik do pobierania backupu (musi laczyc sie po ssh powyzszym kluczem + miec dostep do sudo rsync bez hasła)
 SSH_USER="uberbackup"
