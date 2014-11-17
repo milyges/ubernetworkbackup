@@ -32,7 +32,7 @@ do
 	rotate_dir "$(get_host_dir ${HOST})" "${KEEP}" "$(get_backup_dir "${HOST}")"
 
 	# Pobieramy liste zadan
-	awk -F '.' '$1 == "job" { print $2 }' "${CONFIG}" | sort | uniq | while read JOB
+	for JOB in $(awk -F '.' '$1 == "job" { print $2 }' "${CONFIG}" | sort | uniq)
 	do
 		echo "Starting job ${JOB} on ${HOST}" | log
 		TYPE="$(grep "job.${JOB}.type" "${CONFIG}" | awk -F'=' '{ print $2 }' |  sed 's/^[ \t]*//;s/[ \t]*$//')"

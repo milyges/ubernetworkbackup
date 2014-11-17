@@ -23,6 +23,7 @@ backup_mysql() {
 
 		echo "Backing up MySQL database ${DB}" | log
 		DUMPLOG=$(mktemp)
+		rm -f "${DESTDIR}/${DB}.sql.gz"
 		${SSH} ${SSH_OPTS} "${SSH_USER}@${IP}" "mysqldump --user=${USER} --password=${PASSWD} ${DB}" 2>> "${DUMPLOG}" | gzip -c > "${DESTDIR}/${DB}.sql.gz" 2>> "${DUMPLOG}"
 		[ -s "${DUMPLOG}" ] && cat "${DUMPLOG}" | log
 		rm -f "${DUMPLOG}"
