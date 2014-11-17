@@ -7,6 +7,7 @@ then
 fi
 
 UBDIR="$(dirname -- ${0})"
+DISABLE_MAIL="true"
 
 . "${UBDIR}/config.sh"
 . "${UBDIR}/functions.sh"

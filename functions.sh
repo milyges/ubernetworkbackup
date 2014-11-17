@@ -6,7 +6,6 @@ IONICE="$(which ionice) -c 2 -n 7"
 RSYNC="$(which rsync)"
 LOGFILE="/tmp/uberbackup.log"
 PIDSFILE="/run/uberbackup.pids"
-UBDIR="$(dirname --  "${0}")"
 
 get_remote_hostname() {
 	${SSH} ${SSH_OPTS} "${SSH_USER}@${1}" "hostname" 2> /dev/null
@@ -77,7 +76,10 @@ cleanup() {
 	sed -i -e "/$$/d" "${PIDSFILE}"
 	if [ ! -s "${PIDSFILE}" ]
 	then
-		[ -n "${MAILTO}" ] && mail -s "UberBackup on $(hostname --fqdn) report" "${MAILTO}" < "${LOGFILE}"
+		if [ -n "${MAILTO}" ] && [ "${DISABLE_MAIL}" != "true" ]
+		then
+			mail -s "UberBackup on $(hostname --fqdn) report" "${MAILTO}" < "${LOGFILE}"
+		fi
 		rm -f "${PIDSFILE}"
 		rm -f "${LOGFILE}"
 	fi
