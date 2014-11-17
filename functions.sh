@@ -72,7 +72,6 @@ startup() {
 }
 
 cleanup() {
-	echo "Cleaning up..." | log
 	sed -i -e "/$$/d" "${PIDSFILE}"
 	if [ ! -s "${PIDSFILE}" ]
 	then
