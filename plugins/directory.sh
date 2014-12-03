@@ -8,7 +8,7 @@ backup_directory() {
 	mkdir -p "${DESTDIR}"
 
 	echo "Backing up directory ${DIR} on ${HOST} to ${DESTDIR}" | log
-	${RSYNC} -ar --delete --numeric-ids -e "ssh ${SSH_OPTS}" --rsync-path="sudo rsync ${EXCLUDES}" ${EXCLUDES} "${SSH_USER}@${IP}:${DIR}" "${DESTDIR}" 2>&1  | log
+	${RSYNC} -ar --delete --numeric-ids --timeout="${RSYNC_TIMEOUT}" -e "ssh ${SSH_OPTS}" --rsync-path="sudo rsync ${EXCLUDES}" ${EXCLUDES} "${SSH_USER}@${IP}:${DIR}" "${DESTDIR}" 2>&1  | log
 
 	return 0
 }

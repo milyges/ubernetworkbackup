@@ -6,6 +6,7 @@ IONICE="$(which ionice) -c 2 -n 7"
 RSYNC="$(which rsync)"
 LOGFILE="/tmp/uberbackup.log"
 PIDSFILE="/run/uberbackup.pids"
+RSYNC_TIMEOUT="60"
 
 get_remote_hostname() {
 	${SSH} ${SSH_OPTS} "${SSH_USER}@${1}" "hostname" 2> /dev/null
