@@ -3,7 +3,7 @@
 backup_directory() {
 	DIR="$(job_get_param "${CONFIG}" "${JOB}" "directory" | sed -e 's#\(.\+\)/$#\1#g')"
 	EXCLUDES="$(job_get_param "${CONFIG}" "${JOB}" "exclude" | awk '{ print "--exclude \"" $0 "\"" }' | tr '\n' ' ')"
-	DESTDIR="$(get_backup_dir ${HOST})/directory$(dirname "${DIR}")"
+	DESTDIR="$(get_backup_dir ${HOST})/directory/${JOB}/$(dirname "${DIR}")"
 
 	mkdir -p "${DESTDIR}"
 
